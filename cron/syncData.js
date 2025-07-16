@@ -5,7 +5,7 @@ const Historical = require('../models/Historical');
 require('dotenv').config();
 
 cron.schedule('*/60 * * * *', async () => {
-  console.log("⏰ Cron job triggered at:", new Date().toLocaleString());
+  console.log("Cron job triggered at:", new Date().toLocaleString());
 
   try {
     const response = await axios.get('https://api.coingecko.com/api/v3/coins/markets', {
@@ -16,21 +16,20 @@ cron.schedule('*/60 * * * *', async () => {
         page: 1,
       },
       headers: {
-        'x-cg-pro-api-key': 'CG-pxFETY6vNww4zJJXCSjSGbcU'  // ✅ Pass API Key here
+        'x-cg-pro-api-key': 'CG-pxFETY6vNww4zJJXCSjSGbcU'
       }
     });
 
     const coins = response.data;
 
-    console.log("📦 Coins fetched:", coins.length);
+    console.log("Coins fetched:", coins.length);
 
-    // Save to MongoDB
     await Crypto.deleteMany();
     await Crypto.insertMany(coins);
     await Historical.create({ timestamp: new Date(), data: coins });
 
-    console.log("✅ Data synced to DB");
+    console.log("Data synced to DB");
   } catch (error) {
-    console.error("❌ Cron Error:", error.response?.data || error.message);
+    console.error("Cron Error:", error.response?.data || error.message);
   }
 });
