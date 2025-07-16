@@ -45,13 +45,32 @@ A full-stack cryptocurrency tracker built with the MERN stack. This app fetches 
 ---
 
 ## ⚙ Setup Instructions
+1. Install Backend (Node + Express)
+2. Create .env file 
+MONGO_URI=your_mongodb_atlas_connection_string
+PORT=5000
+3. Run Backend Server 
+npm run dev
+4. Install Frontend (React + Vite) ,Create .env file
+VITE_API_URL=http://localhost:5000
+5. Run Frontend
+npm run dev
+http://localhost:5173
 
-### 🛠 Local Installation
+# How the Cron Job Works
+Located at: server/cron/syncData.js
 
-1. Backend Setup
-bash
-Copy
-Edit
-cd server
-npm install
-touch .env
+Runs every hour (0 * * * *)
+
+Fetches fresh data from CoinGecko
+
+Replaces current data in Crypto collection
+
+Appends new record to Historical collection
+
+# Live Deployments
+
+| Type     | URL                                       |
+| -------- | ------------------------------------------|
+| Frontend | [https://crypt-o-tracker.netlify.app]     |
+| Backend  | [https://crypto-server-xsea.onrender.com] |
