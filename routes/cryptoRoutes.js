@@ -3,7 +3,7 @@ const router = express.Router();
 const Crypto = require('../models/Crypto');
 const Historical = require('../models/Historical');
 
-// ✅ Get current data (live top 10)
+// Get current data (live top 10)
 router.get('/coins', async (req, res) => {
   try {
     const data = await Crypto.find();
@@ -13,7 +13,7 @@ router.get('/coins', async (req, res) => {
   }
 });
 
-// ✅ Save current data snapshot to history
+// Save current data snapshot to history
 router.post('/history', async (req, res) => {
   try {
     const currentData = await Crypto.find();
@@ -24,7 +24,7 @@ router.post('/history', async (req, res) => {
   }
 });
 
-// ✅ Optional: Get history of specific coinId
+// Get history of specific coinId
 router.get('/history/:coinId', async (req, res) => {
   try {
     const { coinId } = req.params;
