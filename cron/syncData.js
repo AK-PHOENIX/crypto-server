@@ -4,8 +4,8 @@ const Crypto = require('../models/Crypto');
 const Historical = require('../models/Historical');
 require('dotenv').config();
 
-//cron applies timer /60 for one hour
-cron.schedule('*/60 * * * *', async () => {
+//cron used for scheduling
+cron.schedule('0 * * * *', async () => {
   console.log("Cron job triggered at:", new Date().toLocaleString());
 
   try {
@@ -13,13 +13,11 @@ cron.schedule('*/60 * * * *', async () => {
 
     const coins = response.data;
 
-    console.log("Coins fetched:", coins.length);
-
     await Crypto.deleteMany();
     await Crypto.insertMany(coins);
     await Historical.create({ timestamp: new Date(), data: coins });
 
-    console.log("Data synced to DB");
+    console.log("Data synced to DB and history saved");
   } catch (error) {
     console.error("Cron Error:", error.response?.data || error.message);
   }
